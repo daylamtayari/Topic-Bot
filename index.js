@@ -14,7 +14,7 @@ client.login(process.env.CLIENT_TOKEN);
 let PREFIX=process.env.PREFIX;
 let TOPICS_FILE=process.env.TOPICS_FILE;
 let WYR_FILE=process.env.WYR_FILE;
-let ROLES=process.env.ROLES;
+let ROLE=process.env.ROLE;
 
 var topics=[];
 var wyr=[];
@@ -113,7 +113,7 @@ client.on('message', message => {
     const command=message.content.slice(PREFIX.length).trim().toLowerCase();
 
     if(command.startsWith('add ')){
-        if(!message.member.roles.cache.has(ROLES)){
+        if(!message.member.roles.cache.has(ROLE)){
             return message.channel.send('Error: You lack the required permissions to add a prompt.');
         }
         const args=command.slice(4).trim();
@@ -143,6 +143,9 @@ client.on('message', message => {
                 return message.channel.send("Error: There are no would-you-rather prompts.")
             }
             return message.channel.send(getPrompt('wyr'));
+        }
+        else{
+            return message.channel.send(`Error: Argument invalid. Please provide a valid argument.\nUse \`${PREFIX}help\` to get the whole list of supported arguments and their respective sytaxes.`);
         }
     }
 });
