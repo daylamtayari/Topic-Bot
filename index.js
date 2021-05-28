@@ -19,6 +19,10 @@ let ROLES=process.env.ROLES;
 var topics=[];
 var wyr=[];
 
+//Store the arrays:
+readFile(TOPICS_FILE);
+readFile(WYR_FILE);
+
 
 /**
  * Bot Functions:
@@ -27,7 +31,7 @@ var wyr=[];
 //Reads a file from a given file.
 function readFile(file){
     const rl=readline.createInterface({
-        input=fs.createReadStream(file),
+        input: fs.createReadStream(file),
         output: process.stdout,
         terminal: false
     });
@@ -47,7 +51,13 @@ function readFile(file){
 }
 
 //Appends a prompt to a file.
-function addLine(file, line){
+function add(file, line){
+    if(file==TOPICS_FILE){
+        topics.push(line);
+    }
+    else if(file==WYR_FILE){
+        wyr.push(line);
+    }
     fs.appendFile(file, '\n'+line, (err) => {
         if(err){
             console.log("Error: Adding line \'"+line+"\' to "+file+".");
@@ -60,7 +70,7 @@ function addLine(file, line){
 
 //Gets a random prompt from a given prompt type.
 function getPrompt(type){
-    if(type=='topics'){
+    if(type=='topic'){
         return topics[Math.floor(Math.random()*topics.length)];
     }
     else if(type=='wyr'){
@@ -80,27 +90,27 @@ function getPrompt(type){
 const helpEmbed=new Discord.MessageEmbed()
     .setTitle('Topic Bot Help')
     .setURL('https://github.com/daylamtayari/Topic-Bot')
-    .setDescription('Topic bot is a bot that returns a random topic or would-you-rather prompt from a list of user-provided prompts.\nBot created by tayari.')
+    .setDescription('Topic bot is a bot that returns a random topic or would-you-rather prompt from a list of user-provided prompts.\nBot created by tayari: https://github.com/daylamtayari.')
     .addFields(
-        {name:'Bot Prefix:', value:'`${PREFIX}`'},
-        {name:'Retrieve Topic:', value:'Retrieve random topic prompt: `${PREFIX}topic`.'},
-        {name:'Retrieve WYR:', value:'Retrieve random would-you-rather prompt: `${PREFIX}wyr`.'},
-        {name:'Add Prompt:', value:'Add a prompt: `${PREFIX}add [topic|wyr] [PROMPT]`.'},
-        {name:'Retrieve Help Prompt', value:'Retrieve the help prompt: `${PREFIX}help`.'}
+        {name:'Bot Prefix:', value:`\`${PREFIX}\``},
+        {name:'Retrieve Topic:', value:`Retrieve random topic prompt: \`${PREFIX}topic\`.`},
+        {name:'Retrieve WYR:', value:`Retrieve random would-you-rather prompt: \`${PREFIX}wyr\`.`},
+        {name:'Add Prompt:', value:`Add a prompt: \`${PREFIX}add [topic|wyr] [PROMPT]\`.`},
+        {name:'Retrieve Help Prompt', value:`Retrieve the help prompt: \`${PREFIX}help\`.`}
     )
     .setFooter('Topic Bot')
     .setTimestamp();
 
 // Ready message:
 client.on('ready', () => {
-    client.user.setActivity("${PREFIX}help | by tayari", {type: "STREAMING", url: "https://github.com/daylamtayari/Topic-Bot"})
+    client.user.setActivity(`${PREFIX}help | by tayari`, {type: "STREAMING", url: "https://github.com/daylamtayari/Topic-Bot"})
 });
 
 // Message response:
 client.on('message', message => {
     if(!message.content.startsWith(PREFIX) || message.author.bot) return;
 
-    const command=message.content.slice(PREFIX.length).trim().shift().toLowerCase();
+    const command=message.content.slice(PREFIX.length).trim().toLowerCase();
 
     if(command.startsWith('add ')){
         if(!message.member.roles.cache.has(ROLES)){
@@ -108,10 +118,10 @@ client.on('message', message => {
         }
         const args=command.slice(4).trim();
         if(args.startsWith('topic ')){
-            addLine(TOPICS_FILE, args.slice(6).trim());
+            add(TOPICS_FILE, args.slice(6).trim());
         }
         else if(args.startsWith('wyr ')){
-            addLine(WYR_FILE, args.slice(4).trim());
+            add(WYR_FILE, args.slice(4).trim());
         }
         else{
             return message.channel.send('Error: Error adding a prompt, provided prompt type is invalid.');
@@ -123,9 +133,15 @@ client.on('message', message => {
     }
     else{
         if(command.startsWith('topic')){
+            if(topics.length==0){
+                return message.channel.send("Error: There are no topics prompts.")
+            }
             return message.channel.send(getPrompt('topic'));
         }
         else if(command.startsWith('wyr')){
+            if(wyr.length==0){
+                return message.channel.send("Error: There are no would-you-rather prompts.")
+            }
             return message.channel.send(getPrompt('wyr'));
         }
     }
