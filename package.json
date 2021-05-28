@@ -1,12 +1,18 @@
 {
-  "scripts": {
-    "start": "node index.js",
-    "dev": "nodemon index.js",
-    "prod": "pm2 start index.js"
-  },
+  "name": "Topic Bot",
+  "version":"1.0",
+  "description": "Discord bot which returns a random topic or would-you-rather prompt from a list of user-provided prompts",
+  "author": "tayari",
+  "license": "GNU GPL v3",
+  "main": "index.js",
   "dependencies": {
     "discord.js": "^12.5.3",
     "dotenv": "^10.0.0",
     "readline": "^1.3.0"
+  },
+  "scripts": {
+    "start": "node index.js",
+    "dev": "nodemon index.js",
+    "prod": "pm2 start index.js"
   }
 }
