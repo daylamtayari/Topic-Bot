@@ -1,7 +1,8 @@
 {
   "scripts": {
     "start": "node index.js",
-    "devStart": "nodemon index.js"
+    "dev": "nodemon index.js",
+    "prod": "pm2 start index.js"
   },
   "dependencies": {
     "discord.js": "^12.5.3",
