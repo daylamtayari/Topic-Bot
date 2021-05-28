@@ -14,6 +14,7 @@ client.login(process.env.CLIENT_TOKEN);
 let PREFIX=process.env.PREFIX;
 let TOPICS_FILE=process.env.TOPICS_FILE;
 let WYR_FILE=process.env.WYR_FILE;
+let ROLES=process.env.ROLES;
 
 var topics=[];
 var wyr=[];
@@ -69,3 +70,63 @@ function getPrompt(type){
         console.log("Error: Get Prompt - Incorrect type provided.");
     }
 }
+
+
+/**
+ * Discord Client Functions:
+ */
+
+//Help embed:
+const helpEmbed=new Discord.MessageEmbed()
+    .setTitle('Topic Bot Help')
+    .setURL('https://github.com/daylamtayari/Topic-Bot')
+    .setDescription('Topic bot is a bot that returns a random topic or would-you-rather prompt from a list of user-provided prompts.\nBot created by tayari.')
+    .addFields(
+        {name:'Bot Prefix:', value:'`${PREFIX}`'},
+        {name:'Retrieve Topic:', value:'Retrieve random topic prompt: `${PREFIX}topic`.'},
+        {name:'Retrieve WYR:', value:'Retrieve random would-you-rather prompt: `${PREFIX}wyr`.'},
+        {name:'Add Prompt:', value:'Add a prompt: `${PREFIX}add [topic|wyr] [PROMPT]`.'},
+        {name:'Retrieve Help Prompt', value:'Retrieve the help prompt: `${PREFIX}help`.'}
+    )
+    .setFooter('Topic Bot')
+    .setTimestamp();
+
+// Ready message:
+client.on('ready', () => {
+    client.user.setActivity("${PREFIX}help | by tayari", {type: "STREAMING", url: "https://github.com/daylamtayari/Topic-Bot"})
+});
+
+// Message response:
+client.on('message', message => {
+    if(!message.content.startsWith(PREFIX) || message.author.bot) return;
+
+    const command=message.content.slice(PREFIX.length).trim().shift().toLowerCase();
+
+    if(command.startsWith('add ')){
+        if(!message.member.roles.cache.has(ROLES)){
+            return message.channel.send('Error: You lack the required permissions to add a prompt.');
+        }
+        const args=command.slice(4).trim();
+        if(args.startsWith('topic ')){
+            addLine(TOPICS_FILE, args.slice(6).trim());
+        }
+        else if(args.startsWith('wyr ')){
+            addLine(WYR_FILE, args.slice(4).trim());
+        }
+        else{
+            return message.channel.send('Error: Error adding a prompt, provided prompt type is invalid.');
+        }
+        return message.channel.send("Prompt successfully added.");
+    }
+    else if(command.startsWith('help')){
+        return message.channel.send(helpEmbed);
+    }
+    else{
+        if(command.startsWith('topic')){
+            return message.channel.send(getPrompt('topic'));
+        }
+        else if(command.startsWith('wyr')){
+            return message.channel.send(getPrompt('wyr'));
+        }
+    }
+});
