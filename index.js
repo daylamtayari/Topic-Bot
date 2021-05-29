@@ -43,11 +43,13 @@ function readFile(file){
         terminal: false
     });
     if(file==TOPICS_FILE){
+        topics=[];
         rl.on('line', (line) => {
             topics.push(line);
         });
     }
     else if(file==WYR_FILE){
+        wyr=[];
         rl.on('line', (line) => {
             wyr.push(line);
         });
@@ -113,8 +115,10 @@ const helpEmbed=new Discord.MessageEmbed()
         {name:'Bot Prefix:', value:`\`${PREFIX}\``},
         {name:'Retrieve Topic:', value:`Retrieve random topic prompt: \`${PREFIX}topic\`.`},
         {name:'Retrieve WYR:', value:`Retrieve random would-you-rather prompt: \`${PREFIX}wyr\`.`},
-        {name:'Add Prompt:', value:`Add a prompt (you need the required permissions): \`${PREFIX}add [topic|wyr] [PROMPT]\`.`},
-        {name:'Retrieve Help Prompt', value:`Retrieve the help prompt: \`${PREFIX}help\`.`}
+        {name:'Add Prompt:', value:`Add a prompt (requires permissions): \`${PREFIX}add [topic|wyr] [PROMPT]\`.`},
+        {name:'Reload Prompt Files:', value: `Reload prompt files (requires permissions): \`${PREFIX}reload\`.`},
+        {name:'Retrieve Help Prompt:', value:`Retrieve the help prompt: \`${PREFIX}help\`.`},
+        {name: 'Permissions:', value: "Only users with the designated bot admin role are able to use the commands which require permissions."}
     )
     .setFooter('Topic Bot')
     .setTimestamp();
@@ -148,6 +152,14 @@ client.on('message', message => {
     }
     else if(command.startsWith('help')){
         return message.channel.send(helpEmbed);
+    }
+    else if(command.startsWith('reload')){
+        if(!message.member.roles.cache.has(ROLE)){
+            return message.channel.send('Error: You lack the required permissions to add a prompt.');
+        }
+        readFile(TOPICS_FILE);
+        readFile(WYR_FILE);
+        return message.channel.send("Prompt files reloaded.");
     }
     else{
         if(command.startsWith('topic')){
