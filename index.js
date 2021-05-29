@@ -166,13 +166,13 @@ client.on('message', message => {
             if(topics.length==0){
                 return message.channel.send("Error: There are no topics prompts.")
             }
-            return message.channel.send(getPrompt('topic'));
+            return message.channel.send("Topic - "+getPrompt('topic'));
         }
         else if(command.startsWith('wyr')){
             if(wyr.length==0){
                 return message.channel.send("Error: There are no would-you-rather prompts.")
             }
-            return message.channel.send(getPrompt('wyr'));
+            return message.channel.send("WYR - "+getPrompt('wyr'));
         }
         else{
             return message.channel.send(`Error: Argument invalid. Please provide a valid argument.\nUse \`${PREFIX}help\` to get the whole list of supported arguments and their respective sytaxes.`);
