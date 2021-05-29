@@ -28,7 +28,14 @@ readFile(WYR_FILE);
  * Bot Functions:
  */
 
-//Reads a file from a given file.
+
+/**
+ * Reads a given file and adds each 
+ * of its individual lines (which each 
+ * represent a separate prompt) to the 
+ * corresponding arrays.
+ * @param {*} file String value that represents the file path to read.
+ */
 function readFile(file){
     const rl=readline.createInterface({
         input: fs.createReadStream(file),
@@ -50,7 +57,13 @@ function readFile(file){
     }
 }
 
-//Appends a prompt to a file.
+/**
+ * Adds a prompt, adding it both 
+ * to the existing corresponding 
+ * array and prompt file.
+ * @param {*} file Prompt file to add the prompt to.
+ * @param {*} line Prompt to add.
+ */
 function add(file, line){
     if(file==TOPICS_FILE){
         topics.push(line);
@@ -68,7 +81,12 @@ function add(file, line){
     });
 }
 
-//Gets a random prompt from a given prompt type.
+/**
+ * Retrieves a random prompt of 
+ * a given prompt type.
+ * @param {*} type Prompt type to retrieve the prompt from.
+ * @returns Randomised prompt of the appropriate type.
+ */
 function getPrompt(type){
     if(type=='topic'){
         return topics[Math.floor(Math.random()*topics.length)];
