@@ -134,7 +134,10 @@ client.on('message', message => {
 
     const command=message.content.slice(PREFIX.length).trim().toLowerCase();
 
-    if(command.startsWith('add ')){
+    if(command==''){
+        return;
+    }
+    else if(command.startsWith('add ')){
         if(!message.member.roles.cache.has(ROLE)){
             return message.channel.send('Error: You lack the required permissions to add a prompt.');
         }
