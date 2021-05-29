@@ -1,5 +1,5 @@
 {
-  "name": "Topic Bot",
+  "name": "topic-bot",
   "version":"1.0",
   "description": "Discord bot which returns a random topic or would-you-rather prompt from a list of user-provided prompts",
   "author": "tayari",
