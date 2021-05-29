@@ -23,19 +23,19 @@ You can also add prompts using the `add` command however, it's usage is restrict
 
 ### Prerequisites: 
 - NodeJS installed to version 12.0+.
-- NPM installed.
-- PM2 installed ([instructions](https://pm2.keymetrics.io/docs/usage/quick-start/)).
-- Discord bot client token.
+- NPM installed.  
+- PM2 installed ([instructions](https://pm2.keymetrics.io/docs/usage/quick-start/)).  
+- Discord bot client token.  
 
 ### Installation and Deployment:
-1. Clone the repository in the desired folder.
-2. Install the node modules by entering `npm install`.
-3. Complete the `.env` template and create a topic and would-you-rather prompt file which will contain all of the user provided prompts.
-    a. Rename the `.env.template` file to `.env`.
-    b. Create a topic and would-you-rather prompt file to contain the prompts.
-    c. Add the local path of the prompt files to the `.env` (i.e. `topics.txt` or `wyr.txt`).
-    d. Add the **ID** of the role which you have decided will be admin role for the bot (allows them to add prompts and reload the prompt files).
-    e. Complete the remaining fields of the `.env` such as the client ID and prefix.
-4. Deploy the bot by entering `npm run prod`.
+1. Clone the repository in the desired folder.  
+2. Install the node modules by entering `npm install`.  
+3. Complete the `.env` template and create a topic and would-you-rather prompt file which will contain all of the user provided prompts.  
+    a. Rename the `.env.template` file to `.env`.  
+    b. Create a topic and would-you-rather prompt file to contain the prompts.  
+    c. Add the local path of the prompt files to the `.env` (i.e. `topics.txt` or `wyr.txt`).  
+    d. Add the **ID** of the role which you have decided will be admin role for the bot (allows them to add prompts and reload the prompt files).  
+    e. Complete the remaining fields of the `.env` such as the client ID and prefix.  
+4. Deploy the bot by entering `npm run prod`.  
 
 **You now just have to add the bot to your server, add prompts and have fun!**
