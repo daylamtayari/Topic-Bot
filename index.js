@@ -110,7 +110,7 @@ function getPrompt(type){
 const helpEmbed=new Discord.MessageEmbed()
     .setTitle('Topic Bot Help')
     .setURL('https://github.com/daylamtayari/Topic-Bot')
-    .setDescription('Topic bot is a bot that returns a random topic or would-you-rather prompt from a list of user-provided prompts.\nBot created by tayari: https://github.com/daylamtayari.')
+    .setDescription('Topic bot is a bot that returns a random topic or would-you-rather prompt from a list of user-provided prompts.\nBot created by tayari: https://github.com/daylamtayari\nFull documentation available at: https://github.com/daylamtayari/Topic-Bot.')
     .addFields(
         {name:'Bot Prefix:', value:`\`${PREFIX}\``},
         {name:'Retrieve Topic:', value:`Retrieve random topic prompt: \`${PREFIX}topic\`.`},
