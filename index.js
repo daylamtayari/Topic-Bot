@@ -172,7 +172,7 @@ client.on('message', message => {
             if(wyr.length==0){
                 return message.channel.send("Error: There are no would-you-rather prompts.")
             }
-            return message.channel.send("WYR - "+getPrompt('wyr')).then(message.react('848056279284580364').then(message.react('848056279284580364')));
+            return message.channel.send("WYR - "+getPrompt('wyr'));
         }
         else{
             return message.channel.send(`Error: Argument invalid. Please provide a valid argument.\nUse \`${PREFIX}help\` to get the whole list of supported arguments and their respective sytaxes.`);
