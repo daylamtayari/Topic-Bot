@@ -103,7 +103,7 @@ const helpEmbed=new Discord.MessageEmbed()
 
 // Ready message:
 client.on('ready', () => {
-    client.user.setActivity(`${PREFIX}help | by tayari`, {type: "STREAMING", url: "https://github.com/daylamtayari/Topic-Bot"})
+    client.user.setActivity(`${PREFIX}help | by tayari`, {type: `STREAMING`, url: "https://twitch.tv/tayarics"})
 });
 
 // Message response:
