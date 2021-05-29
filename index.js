@@ -71,7 +71,7 @@ function add(file, line){
     else if(file==WYR_FILE){
         wyr.push(line);
     }
-    fs.appendFile(file, '\n'+line, (err) => {
+    fs.appendFile(file, line, (err) => {
         if(err){
             console.log("Error: Adding line \'"+line+"\' to "+file+".");
         }
@@ -113,7 +113,7 @@ const helpEmbed=new Discord.MessageEmbed()
         {name:'Bot Prefix:', value:`\`${PREFIX}\``},
         {name:'Retrieve Topic:', value:`Retrieve random topic prompt: \`${PREFIX}topic\`.`},
         {name:'Retrieve WYR:', value:`Retrieve random would-you-rather prompt: \`${PREFIX}wyr\`.`},
-        {name:'Add Prompt:', value:`Add a prompt: \`${PREFIX}add [topic|wyr] [PROMPT]\`.`},
+        {name:'Add Prompt:', value:`Add a prompt (you need the required permissions): \`${PREFIX}add [topic|wyr] [PROMPT]\`.`},
         {name:'Retrieve Help Prompt', value:`Retrieve the help prompt: \`${PREFIX}help\`.`}
     )
     .setFooter('Topic Bot')
