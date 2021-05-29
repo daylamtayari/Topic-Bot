@@ -13,6 +13,6 @@
   "scripts": {
     "start": "node index.js",
     "dev": "nodemon index.js",
-    "prod": "pm2 start index.js"
+    "prod": "pm2 start index.js --name Topic-Bot"
   }
 }
