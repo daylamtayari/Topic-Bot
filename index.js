@@ -87,17 +87,30 @@ function add(file, line){
  * Retrieves a random prompt of 
  * a given prompt type.
  * @param {*} type Prompt type to retrieve the prompt from.
+ * @param {*} num Number of times this has function has been called.
  * @returns Randomised prompt of the appropriate type.
  */
-function getPrompt(type){
+function getPrompt(type, num){
+    var topic;
     if(type=='topic'){
-        return topics[Math.floor(Math.random()*topics.length)];
+        topic=topics[Math.floor(Math.random()*topics.length)];
     }
     else if(type=='wyr'){
-        return wyr[Math.floor(Math.random()*wyr.length)];
+        topic=wyr[Math.floor(Math.random()*wyr.length)];
     }
     else{
-        console.log("Error: Get Prompt - Incorrect type provided.");
+        return "Error: Get Prompt - Incorrect type provided.";
+    }
+    if(topic==''|| topic==' '){
+        if(num<5){
+            getPrompt(type);
+        }
+        else{
+            return "Error: Whitespace prompt issue."
+        }
+    }
+    else{
+        return topic;
     }
 }
 
@@ -169,13 +182,13 @@ client.on('message', message => {
             if(topics.length==0){
                 return message.channel.send("Error: There are no topics prompts.")
             }
-            return message.channel.send("Topic - "+getPrompt('topic'));
+            return message.channel.send("Topic - "+getPrompt('topic',0));
         }
         else if(command.startsWith('wyr')){
             if(wyr.length==0){
                 return message.channel.send("Error: There are no would-you-rather prompts.")
             }
-            return message.channel.send("WYR - "+getPrompt('wyr'));
+            return message.channel.send("WYR - "+getPrompt('wyr',0));
         }
     }
 });
