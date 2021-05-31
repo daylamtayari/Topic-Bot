@@ -73,7 +73,7 @@ function add(file, line){
     else if(file==WYR_FILE){
         wyr.push(line);
     }
-    fs.appendFile(file, line, (err) => {
+    fs.appendFile(file, line+'\n', (err) => {
         if(err){
             console.log("Error: Adding line \'"+line+"\' to "+file+".");
         }
